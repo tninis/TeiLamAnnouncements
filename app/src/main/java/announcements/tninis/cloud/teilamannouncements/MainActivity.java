@@ -159,15 +159,13 @@ public class MainActivity extends AppCompatActivity implements AnnouncementsAdap
 
     @Override
     protected void onStop() {
-        Intent startIntent = new Intent(getApplicationContext(), AnnouncementsService.class);
-        startIntent.setAction("ACTION_START_SERVICE");
-        startService(startIntent);
         super.onStop();
     }
 
     @Override
     public void onRestart(){
         super.onRestart();
+        stopService(new Intent(getApplicationContext(),AnnouncementsService.class));
         new GetAnnouncements().execute(Constants.PAGE);
     }
 
@@ -223,4 +221,19 @@ public class MainActivity extends AppCompatActivity implements AnnouncementsAdap
 
     }
 
+    private void startService()
+    {
+        Intent startIntent = new Intent(getApplicationContext(), AnnouncementsService.class);
+        startIntent.setAction("ACTION_START_SERVICE");
+        startService(startIntent);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+    }
 }

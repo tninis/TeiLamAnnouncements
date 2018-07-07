@@ -75,15 +75,15 @@ public class AnnouncementsService extends Service {
         handler.postDelayed(runnable, 10000);
     }
 
+
     @Override
     public void onDestroy() {
-       handler.removeCallbacks(runnable);
+       //handler.removeCallbacks(runnable);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;
-
     }
 
 
@@ -109,7 +109,7 @@ public class AnnouncementsService extends Service {
                     Elements items = doc.select("li:not(.menu-item) >a[href]");
                     if (currentValue < items.size()) {
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-                        notificationManager.notify(1, mBuilder.setContentText("Current Annou: "+items.size()).build());
+                        notificationManager.notify(1, mBuilder.setContentText("Έχουν δημοσιευθεί νεες ανακοινώσεις").build());
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putInt("CurreCounter", items.size());
                         editor.commit();
